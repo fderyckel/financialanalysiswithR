@@ -1,0 +1,112 @@
+# Getting Data {#getdata}
+
+Overview on getting financial data through the web.  
+We are especially interested at the moment in market data.    
+
+## Introduction  
+There are several tools to get financial data using R.  
+
+* Use existing R packages such as **quantmod** to download data from various data provider (!Yahoo, AlphaVantage, Tiingo, etc.)
+* Use some webscrapping techniques 
+
+Function to download data from the alphavantage API - only 5 download per minutes allowed.  
+This function should be saved for later use.  
+
+```{r loading_libraries_01, warning = FALSE, message = FALSE}
+library(tidyverse)
+library(lubridate)        #to deal with dates
+library(rvest)            # to webscrap financial data 
+
+library(gridExtra)        # to stack the charts
+library(scales)           # again to deal with dates but on the x-axis
+library(bdscale)          # to remove weekends and holidays
+
+
+# setting up the path within the project for easier portability of code
+thePath <- here::here()
+```
+
+
+## Getting historical EOD data using quantmod
+Because we will constantly retrieve eod (end of day) financial data, it will be easier to create a function that we'll reuse whenever necessary.  As of now, the *Alphavantage* api is one of the easiest, reliable api one can use.  I have masked my key but is quite easy to get your own. 
+I want a function that donwload eod data and save them as a .csv file in a separate folder for further use down the road. 
+
+<div class="fold s">
+```{r getting_data_av, eval=FALSE}
+# we make it a function that take as input a vector of tickers
+get_eod_data <- function(ticker_vector){
+  tickers <- ticker_vector
+  for (i in 1:length(tickers)){
+  print(tickers[i])
+  data = quantmod::getSymbols(Symbols = tickers[i],
+                    src = "av",
+                    api.key = "W7SXXXXXXXXXXX2K", 
+                    output.size = "full", 
+                    adjusted = TRUE, 
+                    auto.assign = FALSE,
+                    index.class="POSIXct")
+  colnames(data) = c("Open", "High", "Low", "Close", "Volume", "Adjusted")
+  zoo::write.zoo(data, paste0(thePath, "/stockdata_av/", tickers[i], ".csv"), 
+                 sep = ",", row.names = FALSE)
+  # I am adding this because, we are limited to 5 download per minutes with the free key.
+  Sys.sleep(14)
+}}
+```
+
+</div>
+
+
+```{r getting_data_av_real, echo=FALSE}
+# we make it a function that take as input a vector of tickers
+get_eod_data <- function(ticker_vector){
+  tickers <- ticker_vector
+  for (i in 1:length(tickers)){
+  print(tickers[i])
+  data = quantmod::getSymbols(Symbols = tickers[i],
+                    src = "av",
+                    api.key = "W7SHG93NFG5YWE2K", 
+                    output.size = "full", 
+                    adjusted = TRUE, 
+                    auto.assign = FALSE,
+                    index.class="POSIXct")
+  colnames(data) = c("Open", "High", "Low", "Close", "Volume", "Adjusted")
+  zoo::write.zoo(data, paste0(thePath, "/stockdata_av/", tickers[i], ".csv"), 
+                 sep = ",", row.names = FALSE)
+  # I am adding this because, we are limited to 5 download per minutes with the free key.
+  Sys.sleep(14)
+}}
+```
+
+
+Here are two ways one can use the newly created function.  
+```{r try_eod_data_function, eval=FALSE}
+## Just get data using this function from now on ;-)
+get_eod_data(c("GDX", "MAG"))
+
+
+tickers <- c("XOM", "ABX", "SLB", "CANE", "NIB", "GDXJ")
+get_eod_data(tickers)
+```
+
+## Getting other data  
+I want to get the market cap from the yahoo API.  The yahoo finance has had its fair share of problem over the year when it comes to get eod prices, but it works well enough for other financial data such as market cap.  Again, create a function is the best way forward for further usability. 
+```{r getting_stock_stat, warning=FALSE, message=FALSE}
+library(rvest)
+
+get_market_cap <- function(symbol){
+  # We get the Yahoo! stats
+  print(symbol)
+  url <- paste0('https://finance.yahoo.com/quote/',symbol, "?p=", symbol)
+  yo <- url %>% read_html() %>% html_table() 
+  # Here a few trials and errors are necessary to get the right piece of data (in this case market cap)
+  return(yo[[2]][1, 2])
+}
+
+df <- tibble(ticker = c("XOM", "SLB", "HAL", "RIG", "WFT")) %>% 
+  mutate(market_cap = map_chr(ticker, function(.x) get_market_cap(.x)))
+```
+
+```{r market_cap_table, echo=FALSE}
+knitr::kable(df)
+```
+

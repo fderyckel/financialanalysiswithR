@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Time Series | Analysis of financial data with R</title>
+  <meta name="description" content="This book is about using R for financial analyses purposes." />
+  <meta name="generator" content="bookdown 0.10 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Time Series | Analysis of financial data with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://fderyckel.github.io/financialtradingwithR/" />
+  
+  <meta property="og:description" content="This book is about using R for financial analyses purposes." />
+  <meta name="github-repo" content="fderyckel/financialtradingwithR" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Time Series | Analysis of financial data with R" />
+  
+  <meta name="twitter:description" content="This book is about using R for financial analyses purposes." />
+  
+
+
+
+<meta name="date" content="2019-05-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="img/R.ico" type="image/x-icon" />
+<link rel="prev" href="03-visualizing_data.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/book.css" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class='before'><a href="./">Financial Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="01-introduction.html"><a href="01-introduction.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.1" data-path="01-introduction.html"><a href="01-introduction.html#pre-requisite-and-conventions"><i class="fa fa-check"></i><b>1.1</b> Pre-requisite and conventions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="02-getting_data.html"><a href="02-getting_data.html"><i class="fa fa-check"></i><b>2</b> Getting Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="02-getting_data.html"><a href="02-getting_data.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="02-getting_data.html"><a href="02-getting_data.html#getting-historical-eod-data-using-quantmod"><i class="fa fa-check"></i><b>2.2</b> Getting historical EOD data using quantmod</a></li>
+<li class="chapter" data-level="2.3" data-path="02-getting_data.html"><a href="02-getting_data.html#getting-other-data"><i class="fa fa-check"></i><b>2.3</b> Getting other data</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="03-visualizing_data.html"><a href="03-visualizing_data.html"><i class="fa fa-check"></i><b>3</b> Visualizing data</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="03-visualizing_data.html"><a href="03-visualizing_data.html#plotting-candlestick-chart-with-technicals"><i class="fa fa-check"></i><b>3.0.1</b> Plotting candlestick chart with technicals</a></li>
+<li class="chapter" data-level="3.0.2" data-path="03-visualizing_data.html"><a href="03-visualizing_data.html#plotting-cumulative-return"><i class="fa fa-check"></i><b>3.0.2</b> Plotting cumulative return</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="05-timeseries.html"><a href="05-timeseries.html"><i class="fa fa-check"></i><b>4</b> Time Series</a><ul>
+<li class="chapter" data-level="4.1" data-path="05-timeseries.html"><a href="05-timeseries.html#transforming-data-into-time-series"><i class="fa fa-check"></i><b>4.1</b> Transforming data into time series</a></li>
+</ul></li>
+<li class="divider"></li>
+<li class='after'">
+  <a href="https://fderyckel.github.io/">
+  </a>
+</li>
+<li class='after'">
+  <div style='text-align:center'>
+      <a href="https://github.com/fderyckel/">
+      <i class="fab fa-github fa-2x" aria-hidden="true"></i>
+      </a>
+  </div>
+</li>
+ <li class='after'">
+    <div style='text-align:center'>
+       <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+          <i class="fab fa-creative-commons fa-lg"></i>
+          <i class="fab fa-creative-commons-by fa-lg"></i>
+          <i class="fab fa-creative-commons-sa fa-lg"></i>
+       </a>
+    </div>
+ </li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Analysis of financial data with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="timeseries" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Time Series</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre></div>
+<p>Time series in general, including those outside of the financial world, often contain the following features:</p>
+<p><strong>Trends</strong> - A trend is a consistent directional movement in a time series. These trends will either be deterministic or stochastic. The former allows us to provide an underlying rationale for the trend, while the latter is a random feature of a series that we will be unlikely to explain. Trends often appear in financial series, particularly commodities prices, and many Commodity Trading Advisor (CTA) funds use sophisticated trend identification models in their trading algorithms.</p>
+<p><strong>Seasonal Variation</strong> - Many time series contain seasonal variation. This is particularly true in series representing business sales or climate levels. In quantitative finance we often see seasonal variation in commodities, particularly those related to growing seasons or annual temperature variation (such as natural gas).</p>
+<p><strong>Serial Dependence</strong> - One of the most important characteristics of time series, particularly financial series, is that of serial correlation. This occurs when time series observations that are close together in time tend to be correlated. <strong>Volatility clustering</strong> is one aspect of serial correlation that is particularly important in quantitative trading.</p>
+<p>One important aspect in dealing with financial time series is the one of <strong>serial correlation</strong> (also called <strong>autocorrelation</strong>)</p>
+<div id="transforming-data-into-time-series" class="section level2">
+<h2><span class="header-section-number">4.1</span> Transforming data into time series</h2>
+<p>Let’s load any stock data</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ticker &lt;-<span class="st"> &quot;COP&quot;</span>
+
+<span class="co">#get_eod_data(ticker)</span>
+
+df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">paste0</span>(thePath, <span class="st">&quot;/StockData_av/&quot;</span>, ticker, <span class="st">&quot;.csv&quot;</span>))
+<span class="kw">glimpse</span>(df)</code></pre></div>
+<pre><code>Observations: 5,979
+Variables: 7
+$ Index    &lt;date&gt; 1995-01-03, 1995-01-04, 1995-01-05, 1995-01-06, 1995-01-09, 1995-01-10, 1995-01-11, 1995-01-12, 1995-01-13, 1995-01-16, 1995-01-17, 1995-01-18, 1995-01-19, 1995-01-20, 1995-01-23, 1995-01-24, 1995-01…
+$ Open     &lt;dbl&gt; 32.75, 32.75, 32.50, 32.25, 31.87, 31.12, 30.87, 30.37, 30.25, 30.62, 30.62, 31.00, 31.50, 31.75, 31.75, 32.62, 32.00, 32.37, 32.75, 32.37, 31.75, 31.75, 31.12, 31.50, 32.00, 32.37, 31.75, 32.62, 32.6…
+$ High     &lt;dbl&gt; 33.12, 32.75, 32.50, 32.37, 31.87, 31.50, 31.00, 30.37, 30.75, 30.75, 31.37, 32.00, 31.87, 32.25, 32.75, 32.75, 32.50, 32.62, 32.75, 32.37, 31.87, 32.00, 31.50, 31.62, 32.25, 32.50, 32.75, 32.87, 32.6…
+$ Low      &lt;dbl&gt; 32.62, 32.12, 32.12, 32.00, 31.00, 30.87, 30.00, 29.87, 30.00, 30.37, 30.50, 31.00, 31.50, 31.62, 31.75, 32.00, 31.87, 32.12, 32.37, 31.50, 31.37, 31.25, 31.00, 31.25, 32.00, 31.75, 31.75, 32.50, 32.1…
+$ Close    &lt;dbl&gt; 32.62, 32.50, 32.25, 32.12, 31.12, 31.12, 30.50, 30.12, 30.62, 30.75, 31.12, 31.87, 31.75, 32.00, 32.75, 32.00, 32.37, 32.62, 32.50, 31.75, 31.87, 31.25, 31.37, 31.62, 32.25, 32.00, 32.50, 32.75, 32.1…
+$ Volume   &lt;dbl&gt; 482700, 739150, 604700, 767750, 646550, 583200, 783650, 583600, 1065800, 362300, 913400, 1194100, 703750, 553300, 503050, 445050, 680950, 446900, 463700, 445350, 343000, 582800, 363600, 424850, 680650…
+$ Adjusted &lt;dbl&gt; 5.9212, 5.8994, 5.8540, 5.8304, 5.6489, 5.6489, 5.5364, 5.4674, 5.5582, 5.5817, 5.6489, 5.7851, 5.7633, 5.8086, 5.9448, 5.8086, 5.8758, 5.9212, 5.8994, 5.8141, 5.8361, 5.7225, 5.7445, 5.7903, 5.9057, …</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_ts &lt;-<span class="st"> </span>xts<span class="op">::</span><span class="kw">xts</span>(df[,<span class="op">-</span><span class="dv">1</span>], <span class="dt">order.by =</span> df<span class="op">$</span>Index)
+<span class="kw">head</span>(df_ts)</code></pre></div>
+<pre><code>            Open  High   Low Close Volume Adjusted
+1995-01-03 32.75 33.12 32.62 32.62 482700   5.9212
+1995-01-04 32.75 32.75 32.12 32.50 739150   5.8994
+1995-01-05 32.50 32.50 32.12 32.25 604700   5.8540
+1995-01-06 32.25 32.37 32.00 32.12 767750   5.8304
+1995-01-09 31.87 31.87 31.00 31.12 646550   5.6489
+1995-01-10 31.12 31.50 30.87 31.12 583200   5.6489</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="03-visualizing_data.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/fderyckel/financialtradingwithR/edit/master/05-timeseries.Rmd",
+"text": "Suggest edit to this page"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"search": true,
+"highlight": "pygments"
+});
+});
+</script>
+
+</body>
+
+</html>

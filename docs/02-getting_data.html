@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Getting Data | Analysis of financial data with R</title>
+  <meta name="description" content="This book is about using R for financial analyses purposes." />
+  <meta name="generator" content="bookdown 0.10 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Getting Data | Analysis of financial data with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://fderyckel.github.io/financialtradingwithR/" />
+  
+  <meta property="og:description" content="This book is about using R for financial analyses purposes." />
+  <meta name="github-repo" content="fderyckel/financialtradingwithR" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Getting Data | Analysis of financial data with R" />
+  
+  <meta name="twitter:description" content="This book is about using R for financial analyses purposes." />
+  
+
+
+
+<meta name="date" content="2019-05-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="img/R.ico" type="image/x-icon" />
+<link rel="prev" href="01-introduction.html">
+<link rel="next" href="03-visualizing_data.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/book.css" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class='before'><a href="./">Financial Analysis with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="01-introduction.html"><a href="01-introduction.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.1" data-path="01-introduction.html"><a href="01-introduction.html#pre-requisite-and-conventions"><i class="fa fa-check"></i><b>1.1</b> Pre-requisite and conventions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="02-getting_data.html"><a href="02-getting_data.html"><i class="fa fa-check"></i><b>2</b> Getting Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="02-getting_data.html"><a href="02-getting_data.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="02-getting_data.html"><a href="02-getting_data.html#getting-historical-eod-data-using-quantmod"><i class="fa fa-check"></i><b>2.2</b> Getting historical EOD data using quantmod</a></li>
+<li class="chapter" data-level="2.3" data-path="02-getting_data.html"><a href="02-getting_data.html#getting-other-data"><i class="fa fa-check"></i><b>2.3</b> Getting other data</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="03-visualizing_data.html"><a href="03-visualizing_data.html"><i class="fa fa-check"></i><b>3</b> Visualizing data</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="03-visualizing_data.html"><a href="03-visualizing_data.html#plotting-candlestick-chart-with-technicals"><i class="fa fa-check"></i><b>3.0.1</b> Plotting candlestick chart with technicals</a></li>
+<li class="chapter" data-level="3.0.2" data-path="03-visualizing_data.html"><a href="03-visualizing_data.html#plotting-cumulative-return"><i class="fa fa-check"></i><b>3.0.2</b> Plotting cumulative return</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="05-timeseries.html"><a href="05-timeseries.html"><i class="fa fa-check"></i><b>4</b> Time Series</a><ul>
+<li class="chapter" data-level="4.1" data-path="05-timeseries.html"><a href="05-timeseries.html#transforming-data-into-time-series"><i class="fa fa-check"></i><b>4.1</b> Transforming data into time series</a></li>
+</ul></li>
+<li class="divider"></li>
+<li class='after'">
+  <a href="https://fderyckel.github.io/">
+  </a>
+</li>
+<li class='after'">
+  <div style='text-align:center'>
+      <a href="https://github.com/fderyckel/">
+      <i class="fab fa-github fa-2x" aria-hidden="true"></i>
+      </a>
+  </div>
+</li>
+ <li class='after'">
+    <div style='text-align:center'>
+       <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+          <i class="fab fa-creative-commons fa-lg"></i>
+          <i class="fab fa-creative-commons-by fa-lg"></i>
+          <i class="fab fa-creative-commons-sa fa-lg"></i>
+       </a>
+    </div>
+ </li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Analysis of financial data with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="getdata" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Getting Data</h1>
+<p>Overview on getting financial data through the web.<br />
+We are especially interested at the moment in market data.</p>
+<div id="introduction" class="section level2">
+<h2><span class="header-section-number">2.1</span> Introduction</h2>
+<p>There are several tools to get financial data using R.</p>
+<ul>
+<li>Use existing R packages such as <strong>quantmod</strong> to download data from various data provider (!Yahoo, AlphaVantage, Tiingo, etc.)</li>
+<li>Use some webscrapping techniques</li>
+</ul>
+<p>Function to download data from the alphavantage API - only 5 download per minutes allowed.<br />
+This function should be saved for later use.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(lubridate)        <span class="co">#to deal with dates</span>
+<span class="kw">library</span>(rvest)            <span class="co"># to webscrap financial data </span>
+
+<span class="kw">library</span>(gridExtra)        <span class="co"># to stack the charts</span>
+<span class="kw">library</span>(scales)           <span class="co"># again to deal with dates but on the x-axis</span>
+<span class="kw">library</span>(bdscale)          <span class="co"># to remove weekends and holidays</span>
+
+
+<span class="co"># setting up the path within the project for easier portability of code</span>
+thePath &lt;-<span class="st"> </span>here<span class="op">::</span><span class="kw">here</span>()</code></pre></div>
+</div>
+<div id="getting-historical-eod-data-using-quantmod" class="section level2">
+<h2><span class="header-section-number">2.2</span> Getting historical EOD data using quantmod</h2>
+<p>Because we will constantly retrieve eod (end of day) financial data, it will be easier to create a function that we’ll reuse whenever necessary. As of now, the <em>Alphavantage</em> api is one of the easiest, reliable api one can use. I have masked my key but is quite easy to get your own. I want a function that donwload eod data and save them as a .csv file in a separate folder for further use down the road.</p>
+<div class="fold s">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># we make it a function that take as input a vector of tickers</span>
+get_eod_data &lt;-<span class="st"> </span><span class="cf">function</span>(ticker_vector){
+  tickers &lt;-<span class="st"> </span>ticker_vector
+  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(tickers)){
+  <span class="kw">print</span>(tickers[i])
+  data =<span class="st"> </span>quantmod<span class="op">::</span><span class="kw">getSymbols</span>(<span class="dt">Symbols =</span> tickers[i],
+                    <span class="dt">src =</span> <span class="st">&quot;av&quot;</span>,
+                    <span class="dt">api.key =</span> <span class="st">&quot;W7SXXXXXXXXXXX2K&quot;</span>, 
+                    <span class="dt">output.size =</span> <span class="st">&quot;full&quot;</span>, 
+                    <span class="dt">adjusted =</span> <span class="ot">TRUE</span>, 
+                    <span class="dt">auto.assign =</span> <span class="ot">FALSE</span>,
+                    <span class="dt">index.class=</span><span class="st">&quot;POSIXct&quot;</span>)
+  <span class="kw">colnames</span>(data) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Open&quot;</span>, <span class="st">&quot;High&quot;</span>, <span class="st">&quot;Low&quot;</span>, <span class="st">&quot;Close&quot;</span>, <span class="st">&quot;Volume&quot;</span>, <span class="st">&quot;Adjusted&quot;</span>)
+  zoo<span class="op">::</span><span class="kw">write.zoo</span>(data, <span class="kw">paste0</span>(thePath, <span class="st">&quot;/stockdata_av/&quot;</span>, tickers[i], <span class="st">&quot;.csv&quot;</span>), 
+                 <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)
+  <span class="co"># I am adding this because, we are limited to 5 download per minutes with the free key.</span>
+  <span class="kw">Sys.sleep</span>(<span class="dv">14</span>)
+}}</code></pre></div>
+</div>
+<p>Here are two ways one can use the newly created function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Just get data using this function from now on ;-)
+<span class="kw">get_eod_data</span>(<span class="kw">c</span>(<span class="st">&quot;GDX&quot;</span>, <span class="st">&quot;MAG&quot;</span>))
+
+
+tickers &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;XOM&quot;</span>, <span class="st">&quot;ABX&quot;</span>, <span class="st">&quot;SLB&quot;</span>, <span class="st">&quot;CANE&quot;</span>, <span class="st">&quot;NIB&quot;</span>, <span class="st">&quot;GDXJ&quot;</span>)
+<span class="kw">get_eod_data</span>(tickers)</code></pre></div>
+</div>
+<div id="getting-other-data" class="section level2">
+<h2><span class="header-section-number">2.3</span> Getting other data</h2>
+<p>I want to get the market cap from the yahoo API. The yahoo finance has had its fair share of problem over the year when it comes to get eod prices, but it works well enough for other financial data such as market cap. Again, create a function is the best way forward for further usability.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)
+
+get_market_cap &lt;-<span class="st"> </span><span class="cf">function</span>(symbol){
+  <span class="co"># We get the Yahoo! stats</span>
+  <span class="kw">print</span>(symbol)
+  url &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&#39;https://finance.yahoo.com/quote/&#39;</span>,symbol, <span class="st">&quot;?p=&quot;</span>, symbol)
+  yo &lt;-<span class="st"> </span>url <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">read_html</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_table</span>() 
+  <span class="co"># Here a few trials and errors are necessary to get the right piece of data (in this case market cap)</span>
+  <span class="kw">return</span>(yo[[<span class="dv">2</span>]][<span class="dv">1</span>, <span class="dv">2</span>])
+}
+
+df &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">ticker =</span> <span class="kw">c</span>(<span class="st">&quot;XOM&quot;</span>, <span class="st">&quot;SLB&quot;</span>, <span class="st">&quot;HAL&quot;</span>, <span class="st">&quot;RIG&quot;</span>, <span class="st">&quot;WFT&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">market_cap =</span> <span class="kw">map_chr</span>(ticker, <span class="cf">function</span>(.x) <span class="kw">get_market_cap</span>(.x)))</code></pre></div>
+<pre><code>[1] &quot;XOM&quot;
+[1] &quot;SLB&quot;
+[1] &quot;HAL&quot;
+[1] &quot;RIG&quot;
+[1] &quot;WFT&quot;</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">ticker</th>
+<th align="left">market_cap</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">XOM</td>
+<td align="left">320.759B</td>
+</tr>
+<tr class="even">
+<td align="left">SLB</td>
+<td align="left">54.02B</td>
+</tr>
+<tr class="odd">
+<td align="left">HAL</td>
+<td align="left">22.225B</td>
+</tr>
+<tr class="even">
+<td align="left">RIG</td>
+<td align="left">4.52B</td>
+</tr>
+<tr class="odd">
+<td align="left">WFT</td>
+<td align="left">366.817M</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="01-introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="03-visualizing_data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/fderyckel/financialtradingwithR/edit/master/02-getting_data.Rmd",
+"text": "Suggest edit to this page"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"search": true,
+"highlight": "pygments"
+});
+});
+</script>
+
+</body>
+
+</html>

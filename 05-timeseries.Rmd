@@ -1,0 +1,33 @@
+# Time Series {#timeseries}
+
+```{r message=FALSE}
+library(tidyverse)
+```
+
+
+Time series in general, including those outside of the financial world, often contain the following features:
+
+**Trends** - A trend is a consistent directional movement in a time series. These trends will either be deterministic or stochastic. The former allows us to provide an underlying rationale for the trend, while the latter is a random feature of a series that we will be unlikely to explain. Trends often appear in financial series, particularly commodities prices, and many Commodity Trading Advisor (CTA) funds use sophisticated trend identification models in their trading algorithms. 
+
+**Seasonal Variation** - Many time series contain seasonal variation. This is particularly true in series representing business sales or climate levels. In quantitative finance we often see seasonal variation in commodities, particularly those related to growing seasons or annual temperature variation (such as natural gas). 
+
+**Serial Dependence** - One of the most important characteristics of time series, particularly financial series, is that of serial correlation. This occurs when time series observations that are close together in time tend to be correlated. __Volatility clustering__ is one aspect of serial correlation that is particularly important in quantitative trading.
+
+One important aspect in dealing with financial time series is the one of **serial correlation** (also called **autocorrelation**)
+
+## Transforming data into time series 
+Let's load any stock data
+
+```{r transforming_ts_1, message = FALSE, warning = FALSE}
+ticker <- "COP"
+
+#get_eod_data(ticker)
+
+df <- read_csv(paste0(thePath, "/StockData_av/", ticker, ".csv"))
+glimpse(df)
+
+df_ts <- xts::xts(df[,-1], order.by = df$Index)
+head(df_ts)
+```
+
+

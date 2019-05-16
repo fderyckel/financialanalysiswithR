@@ -1,0 +1,21 @@
+# Prerequisites
+Welcome to my reference book in leveraging **R**, the **tidyverse** and other *R tools* for analysing financial data.  This is still a huge mess as I am trying to gain more skills in quantitative trading.  
+
+So this book is a compilation of the techniques I've learned along the way.  Most of what I have learned is through blog posts, stack overflow questions, etc.  I am not taking any credit for all the great ideas, examples, graphs, etc. found in this web book.  Most of what you'll find here has been directly taken from blogs, Kaggle kernels, etc. I have tried as much as I could remember to reference the origins of the ideas. I do take responsibility for all mistakes, typos, unclear explanations, poor labeling / presentation of graphs.  If you find anything that require improvement, I would be grateful if you would let me know: f.deryckel@gmail.com or even better post an issue on github [here](https://github.com/fderyckel/machinelearningwithr).  
+
+
+## Pre-requisite and conventions
+
+Here are the libraries, we are using throughout the book
+
+```{r message = FALSE, warning = FALSE, eval = FALSE}
+library(bdscale)          # To get rid of weekend and holidays on candlestick chart
+library(caret)            # For data spliting, cross validation and unified interface to run algo
+library(gridExtra)        # to stack the charts (like on candlestick chart)
+library(lubridate)        # To deal with dates
+library(RollingWindow)    # For fast rolling functions (like max, std, etc.)
+library(tidyverse)        # For pretty much everything related to data wrangling
+library(scales)           # again to deal with dates but on the x-axis
+library(urca)
+```
+
